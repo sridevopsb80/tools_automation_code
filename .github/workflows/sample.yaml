@@ -1,0 +1,11 @@
+#uses: actions/checkout@v4 is used to checkout the code
+#we are running a job that will checkout the code and initiate terraform
+
+name: Provision Tool Infra
+on: [push, workflow_dispatch]
+jobs:
+  Provision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: terraform init
