@@ -12,7 +12,7 @@ resource "aws_instance" "tool" {
 #creating aws security group using terraform.
 # egress for outbound traffic, ingress for inbound.
 #from_port = 0, to_port = 0 denotes that all ports are allowed.
-#ingress only has port 22 opened.
+#ingress only has port 22 opened. protocol has to be specified as TCP
 
 resource "aws_security_group" "tool-sg" {
   name        = "${var.name}-sg"
@@ -26,7 +26,7 @@ resource "aws_security_group" "tool-sg" {
   ingress {
     from_port        = 22
     to_port          = 22
-    protocol         = "-1"
+    protocol         = "TCP"
     cidr_blocks      = ["0.0.0.0/0"]
   }
   tags = {
