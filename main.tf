@@ -1,3 +1,5 @@
+#using a for_each loop
+
 #each.key value is github-runner as defined in variables.tf
 
 module "tool-infra-create" {
