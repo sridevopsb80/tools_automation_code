@@ -1,19 +1,23 @@
 # To create a self-hosted github runner
 ## https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner
 
-# Following steps need to be run manually since installation with dnf runs into errors
+# Following steps need to be run manually since installation with dnf runs into errors. Relevant parts are commented out below
+
+#Do not perform the below steps as root user. The user we use should be the same as the user we use for Grab token task section.
 
 # Download and Install github cli in remote machine
 ## Documentation for installation: https://github.com/cli/cli/blob/trunk/docs/install_linux.md
 
-## sudo curl -L -O /etc/yum.repos.d/gh-cli.repo https://cli.github.com/packages/rpm/gh-cli.repo
+## sudo curl -L -o /etc/yum.repos.d/gh-cli.repo https://cli.github.com/packages/rpm/gh-cli.repo
 ## sudo dnf install gh -y
 
+##################################
 # Authenticate to github.
 ## Documentation: https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-an-organization
 
 ## gh auth login
 ## gh auth refresh -h github.com -s admin:org
+
 ## you will be provided with a web link to login. use a browser to authenticate the device in github
 
 #########################################
@@ -28,6 +32,7 @@
 ##  -H "Accept: application/vnd.github+json" \
 ##  -H "X-GitHub-Api-Version: 2022-11-28" \
 ##  /orgs/ORG/actions/runners/registration-token
+
 ## This output cannot be pasted as is in yml. Refer the below documentation to see how multi-line output can be provided.
 ## https://stackoverflow.com/questions/3790454/how-do-i-break-a-string-in-yaml-over-multiple-lines
 
@@ -49,16 +54,16 @@
   ansible.builtin.file:
     path: /actions-runner
     state: directory
-  owner: grunner
-  group: grunner
+    owner: grunner
+    group: grunner
 
 - name: Download & Extract Runner
   ansible.builtin.unarchive:
     src: https://github.com/actions/runner/releases/download/v2.317.0/actions-runner-linux-x64-2.317.0.tar.gz
     dest: "/actions-runner"
     remote_src: yes
-  owner: grunner
-  group: grunner
+    owner: grunner
+    group: grunner
 
 #Commenting this portion out as it is handled manually
 #- name: Download GitHub Cli Repo
@@ -87,6 +92,14 @@
     name: libicu
     state: latest
 
+# To make sure that the installation runs only when the count is 0, we are getting the runner count and introducing conditional that count == 0 in later parts
+
+- name: Get the runner count
+  ansible.builtin.shell: |
+    gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/sridevopsb80/actions/runners | jq .total_count |xargs
+  register: runner_count
+  become_user: ec2-user
+
 #Create the runner and start the configuration experience
 
 ##Refer Configure section under https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner
@@ -106,6 +119,19 @@
   args:
     chdir: /actions-runner #this is the directory being used. Refer Create github directory
   become_user: grunner #command should not be run as root user
+  when: runner_count.stdout == "0" #conditional that runner count has to be 0
 
-#while running the above command manually, we notice that it requires libicu dependency
+#while running the above command manually, we notice that it requires libicu dependency, which needs to be installed in the previous step
 
+#To run the service, below steps need to be done.
+#Login to the remote server -> cd /actions-runner -> ./run.sh to start the runner.
+#sudo -i
+#./svc.sh install grunner -> service will be started as grunner user
+#./svc.sh start
+#./svc.sh will show available options, including install, uninstall, start and stop
+
+- name: Install Runner Service
+  ansible.builtin.shell: ./svc.sh install grunner ;  ./svc.sh start
+  args:
+    chdir: /actions-runner
+  when: runner_count.stdout == "0" #conditional that runner count has to be 0
