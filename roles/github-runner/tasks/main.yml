@@ -1,5 +1,6 @@
 # To create a self-hosted github runner
-## https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner
+## Go to https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner
+## Documentation: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners
 
 # Following steps need to be run manually since installation with dnf runs into errors. Relevant parts are commented out below
 
