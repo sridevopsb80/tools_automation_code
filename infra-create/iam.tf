@@ -19,8 +19,12 @@ resource "aws_iam_role" "role" {
     tag-key = "${var.name}-role"
   }
 }
+
+#attaching policy
+#count is being used since policy_name could be made a list variable.
 resource "aws_iam_role_policy_attachment" "policy-attach" {
   count      = length(var.policy_name)
   role       = aws_iam_role.role.name
   policy_arn = "arn:aws:iam::aws:policy/${var.policy_name["count.index"]}"
+  #policy_arn info can be obtained from aws.
 }
