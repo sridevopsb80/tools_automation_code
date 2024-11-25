@@ -1,4 +1,4 @@
-#creating an iam role to be attached to the github runner server
+#creating an iam role(github-runner-role) to be attached to the github runner server
 
 resource "aws_iam_role" "role" {
   name = "${var.name}-role"
@@ -20,11 +20,17 @@ resource "aws_iam_role" "role" {
   }
 }
 
+#ARN can be attached to SAS and PAS services. For IAS such as ec2, we need to attach Instance profile ARN as well
+resource "aws_iam_instance_profile" "instance-profile" {
+  name = "${var.name}-role"
+  role = aws_iam_role.role.name
+}
+
 #attaching policy
 #count is being used since policy_name could be made a list variable.
 resource "aws_iam_role_policy_attachment" "policy-attach" {
   count      = length(var.policy_name)
   role       = aws_iam_role.role.name
-  policy_arn = "arn:aws:iam::aws:policy/${var.policy_name["count.index"]}"
+  policy_arn = "arn:aws:iam::aws:policy/${var.policy_name[count.index]}"
   #policy_arn info can be obtained from aws.
 }
