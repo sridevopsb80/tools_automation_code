@@ -26,17 +26,17 @@
 ## you will be provided with a web link to login. use a browser to authenticate the device in github while provisioning a server
 
 #########################################
+# Documentation to create a registration token for an organization: https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-an-organization. Follow the github cli example provided there.
+# Below is the command (taken from the github cli example section of the github authentication documentation page) that is required to obtain the token. Replace ORG with your github organization info, such as sridevopsb80.
 
-# Below is the command (taken from the github authentication documentation page) that is required to obtain the token. Replace ORG with your github organization info, such as sridevopsb80.
-
-## GitHub CLI api
-## https://cli.github.com/manual/gh_api
 ##
 ##  gh api \
 ##  --method POST \
 ##  -H "Accept: application/vnd.github+json" \
 ##  -H "X-GitHub-Api-Version: 2022-11-28" \
 ##  /orgs/ORG/actions/runners/registration-token
+
+## gh api --method POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/sridevopsb80/actions/runners/registration-token | jq .token is being used to just get the token from the output
 
 ## This output cannot be pasted as is in yml. Refer the below documentation to see how multi-line output can be provided.
 ## https://stackoverflow.com/questions/3790454/how-do-i-break-a-string-in-yaml-over-multiple-lines
