@@ -102,6 +102,16 @@
   register: runner_count
   become_user: ec2-user
 
+  #Steps to remove grunner in case it already exists:
+  #ps -ef | grep grunner
+  #sudo su
+  #cd /actions-runner
+  #./svc.sh stop
+  #./svc.sh uninstall
+  #su - grunner
+  #cd /actions-runner
+  #./config.sh remove --name <runner name> --token <github auth token>
+
 #Create the runner and start the configuration experience
 
 ##Refer Configure section under https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner
@@ -125,13 +135,15 @@
 
 #while running the above command manually, we notice that it requires libicu dependency, which needs to be installed in the previous step
 
-#To run the service, below steps need to be done.
+#To run the service, below step needs to be done.
 #Login to the remote server as grunner -> cd /actions-runner -> ./run.sh to start the runner. Now the runner should be connected to github
 
 #sudo -i
 #./svc.sh install grunner -> service will be started as grunner user
 #./svc.sh start
 #./svc.sh will show available options, including install, uninstall, start and stop
+
+
 
 - name: Install Runner Service
   ansible.builtin.shell: ./svc.sh install grunner ;  ./svc.sh start
