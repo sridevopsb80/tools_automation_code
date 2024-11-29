@@ -151,6 +151,7 @@
     chdir: /actions-runner
   when: runner_count.stdout == "0" #conditional that runner count has to be 0. we are using "" since output is strings
 
+# Setting up terraform for executing roboshop_terraform project
 - name: Download Terraform Repo file
   ansible.builtin.get_url:
     url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
