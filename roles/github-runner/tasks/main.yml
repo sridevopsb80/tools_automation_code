@@ -1,20 +1,24 @@
 # To create a self-hosted github runner
 
-## Go to https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner for steps to add a self-hosted runner to github actions
 ## Documentation: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners
+## Go to https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner for steps to add a self-hosted runner to github actions
+
 
 #######################################
 # In order to facilitate configuration on the server side, we need to setup authorization between ec2 and github using github cli. Since the execution of this part ran into issues via automation, the following steps need to be run manually.
 # Note: Do not perform the below steps as root user. The user we use should be the same as the user we use for Grab token task section. Here the defined user is ec2-user
 
+# Documentation for github cli installation: https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+# Documentation to create a registration token for an organization: https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-an-organization. Follow the github cli example provided there.
+
+#Steps:
+
 # Download and Install github cli in remote machine
-## Documentation for installation: https://github.com/cli/cli/blob/trunk/docs/install_linux.md
 
 ## sudo curl -L -o /etc/yum.repos.d/gh-cli.repo https://cli.github.com/packages/rpm/gh-cli.repo
 ## sudo dnf install gh -y
 
 # Authenticate to github.
-## Documentation: https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-an-organization
 
 ## gh auth login
 ## gh auth refresh -h github.com -s admin:org
