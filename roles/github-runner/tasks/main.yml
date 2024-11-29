@@ -42,7 +42,6 @@
 
 #
 
-
 - name: Setup Prompt
   ansible.builtin.shell: set-prompt github-runner
 
