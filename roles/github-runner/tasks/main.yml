@@ -126,7 +126,7 @@
 #while running the above command manually, we notice that it requires libicu dependency, which needs to be installed in the previous step
 
 #To run the service, below steps need to be done.
-#Login to the remote server -> cd /actions-runner -> ./run.sh to start the runner.
+#Login to the remote server as grunner -> cd /actions-runner -> ./run.sh to start the runner.
 #sudo -i
 #./svc.sh install grunner -> service will be started as grunner user
 #./svc.sh start
