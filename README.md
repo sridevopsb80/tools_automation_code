@@ -1,9 +1,9 @@
 # To setup tools via automation
 
-### infra-create folder - to provision infra resources using terraform. also refer main.tf, state.tf and variables.tf
-### roles folder - using ansible to install github runner in the provisioned resources . Also refer tool-setup.yml
+infra-create folder - to provision infra resources using terraform. also refer main.tf, state.tf and variables.tf
+roles folder - using ansible to install github runner in the provisioned resources . Also refer tool-setup.yml
 
-### Refer to Infra-create folder to see EC2 Instance, Route53, Security groups creation and attaching IAM role policy and Instance profile ARN.
+Refer to Infra-create folder to see EC2 Instance, Route53, Security groups creation and attaching IAM role policy and Instance profile ARN.
 
 
 ## To install github-runner in remote machine using ansible
