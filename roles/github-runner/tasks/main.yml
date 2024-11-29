@@ -1,10 +1,13 @@
 # To create a self-hosted github runner
-## Go to https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner
+
+## Go to https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner for steps to add a self-hosted runner to github actions
+
 ## Documentation: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners
 
-# Following steps need to be run manually since installation with dnf runs into errors. Relevant parts are commented out below
+#######################################
 
-#Do not perform the below steps as root user. The user we use should be the same as the user we use for Grab token task section.
+# Following steps need to be run manually since installation with dnf runs into errors.
+# Note: Do not perform the below steps as root user. The user we use should be the same as the user we use for Grab token task section. Here the defined user is ec2-user
 
 # Download and Install github cli in remote machine
 ## Documentation for installation: https://github.com/cli/cli/blob/trunk/docs/install_linux.md
@@ -12,14 +15,13 @@
 ## sudo curl -L -o /etc/yum.repos.d/gh-cli.repo https://cli.github.com/packages/rpm/gh-cli.repo
 ## sudo dnf install gh -y
 
-##################################
 # Authenticate to github.
 ## Documentation: https://docs.github.com/en/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-an-organization
 
 ## gh auth login
 ## gh auth refresh -h github.com -s admin:org
 
-## you will be provided with a web link to login. use a browser to authenticate the device in github
+## you will be provided with a web link to login. use a browser to authenticate the device in github while provisioning a server
 
 #########################################
 
@@ -36,11 +38,9 @@
 
 ## This output cannot be pasted as is in yml. Refer the below documentation to see how multi-line output can be provided.
 ## https://stackoverflow.com/questions/3790454/how-do-i-break-a-string-in-yaml-over-multiple-lines
-
 ## Refer Grab Token section.
 
 #
-
 
 
 - name: Setup Prompt
@@ -81,7 +81,7 @@
   ansible.builtin.shell: |
     gh api --method POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/sridevopsb80/actions/runners/registration-token | jq .token
   register: token #using token since we have token defined in the shell command under configure github runner
-  become_user: ec2-user # Token can be fetched by ec2-user as gh login was done by that user.
+  become_user: ec2-user # Token has to be fetched by ec2-user as gh login was done by that user.
 
 #Commenting out below section since it is only to be used for testing
 #- name: Print token

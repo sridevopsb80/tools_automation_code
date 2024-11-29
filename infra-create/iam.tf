@@ -2,7 +2,7 @@
 
 resource "aws_iam_role" "role" {
   name = "${var.name}-role"
-  #go to the corresponding iam role(workstation role)->trust relationship version and statement info
+  #we are modeling this role after a pre-existing role - workstation role. go to trust relationship version and statement info in that role to fill in the info below.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -32,5 +32,6 @@ resource "aws_iam_role_policy_attachment" "policy-attach" {
   count      = length(var.policy_name)
   role       = aws_iam_role.role.name
   policy_arn = "arn:aws:iam::aws:policy/${var.policy_name[count.index]}"
-  #policy_arn info can be obtained from aws.
+  #policy_arn info is obtained from aws policy AdministratorAccess.
+  #policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
