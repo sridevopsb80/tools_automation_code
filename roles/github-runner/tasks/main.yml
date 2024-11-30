@@ -112,6 +112,13 @@
   #cd /actions-runner
   #./config.sh remove --name <runner name> --token <github auth token>
 
+# To make sure that the installation runs only when the status is online, we are getting the runner status and introducing conditional that status == offline in later parts. we are filtering the results for ec2 runner-name only
+- name: Get the runner status
+  ansible.builtin.shell: |
+    gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/sridevopsb80/actions/runners | jq '.runners[] | select(.name == "ec2") | .status |xargs'
+  register: runner_status
+  become_user: ec2-user
+
 #Create the runner and start the configuration experience
 
 ##Refer Configure section under https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner
@@ -130,7 +137,7 @@
   args:
     chdir: /actions-runner #this is the directory being used. Refer Create github directory
   become_user: grunner #command should not be run as root user
-  when: runner_count.stdout == "0" #conditional that runner count has to be 0. we are using "" since output is strings
+  when: runner_count.stdout == "0" or runner_status.stdout == "offline" #conditional about runner count and runner status. we are using "" since output is strings
 
 #while running the above command manually, we notice that it requires libicu dependency, which needs to be installed in the previous step
 
@@ -148,7 +155,7 @@
   ansible.builtin.shell: ./svc.sh install grunner ;  ./svc.sh start
   args:
     chdir: /actions-runner
-  when: runner_count.stdout == "0" #conditional that runner count has to be 0. we are using "" since output is strings
+  when: runner_count.stdout == "0" or runner_status.stdout == "offline" #conditional about runner count and runner status. we are using "" since output is strings
 
 # Setting up terraform for executing roboshop_terraform project
 - name: Download Terraform Repo file
