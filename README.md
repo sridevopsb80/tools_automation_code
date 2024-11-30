@@ -11,3 +11,9 @@ Refer to Infra-create folder to see EC2 Instance, Route53, Security groups creat
 ````
 ansible-playbook -i <Remote host IP where you want github-runner installed>, tool-setup.yml -e ansible_user=ec2-user -e ansible_password=DevOps321 -e tool_name=github-runner
 ````
+
+## To enable debug mode in ansible
+
+````
+ansible-playbook -i <Remote host IP where you want github-runner installed>, tool-setup.yml -e ansible_user=ec2-user -e ansible_password=DevOps321 -e tool_name=github-runner -vv
+````
