@@ -115,7 +115,6 @@
 #Create the runner and start the configuration experience
 
 ##Refer Configure section under https://github.com/organizations/sridevopsb80/settings/actions/runners -> Create self-hosted runner
-
 ##./config.sh --url https://github.com/sridevopsb80 --token BJ6WX5PVNULOWGF4MLI74G3HICUOU
 
 ## The below info is appended to the above command, since we are prompted for it during execution
