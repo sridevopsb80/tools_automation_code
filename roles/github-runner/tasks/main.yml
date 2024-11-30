@@ -134,7 +134,7 @@
 
 #while running the above command manually, we notice that it requires libicu dependency, which needs to be installed in the previous step
 
-#To run the service, below step needs to be done.
+#To run the service manually, below step needs to be done. Ignore when running ansible
 #Login to the remote server as grunner -> cd /actions-runner -> ./run.sh to start the runner. Now the runner should be connected to github
 
 #sudo -i
