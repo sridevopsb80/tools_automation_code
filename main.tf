@@ -1,4 +1,4 @@
-#using a for_each loop
+#using a for_each loop in case variable tools will have multiple entries later on
 
 #each.key value is github-runner as defined in variables.tf
 

@@ -8,7 +8,10 @@ variable "tools" {
       instance_type = "t3.small"
       policy_name = [
         "AdministratorAccess"
-        #Administrator access is an existing policy in aws policies. we are not defining a new policy, just using an existing one. we can add more policies under policy_name. when we do, it will become a list variable.
+        #Although we are referencing and provisioning (a pre-existing AWS policy) Administrator access to github-runner here, this is not good practice.
+        # we can add more policies under policy_name. when we do, it will become a list variable.
+        # When provisioning another tool, the policy name can be changed based on the desired access.
+
       ]
     }
   }

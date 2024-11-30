@@ -2,7 +2,7 @@
 
 resource "aws_iam_role" "role" {
   name = "${var.name}-role"
-  #we are modeling this role after a pre-existing role - workstation role. go to trust relationship version and statement info in that role to fill in the info below.
+  #we are modeling this role after a pre-existing role - workstation role. go to trust relationship version and statement info in that role to fill in the info below. name = github-runner-role
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
