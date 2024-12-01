@@ -152,7 +152,7 @@
 
 # Set path to receive input from roles/files/path, which is the same as $PATH derived from the github-runner machine
 - name: Update Path file
-  ansible.builtin.file:
+  ansible.builtin.copy:
     src: path
     dest: /actions-runner/.path
   become_user: grunner
