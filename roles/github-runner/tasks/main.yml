@@ -22,6 +22,7 @@
 
 ## gh auth login
 ## gh auth refresh -h github.com -s admin:org
+## Alternatively, combine and use gh auth login -s admin:org
 
 ## you will be provided with a web link to login. use a browser to authenticate the device in github while provisioning a server
 
