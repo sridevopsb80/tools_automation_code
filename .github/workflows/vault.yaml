@@ -6,4 +6,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4 #used to checkout the code
       - name: Run Vault Setup
-        run: ansible-playbook -i vault-internal.sridevops.site, tool-setup.yml -e ansible_user=ec2-user -e ansible_password=DevOps321 -e tool_name=vault
+        run: ansible-playbook -i vault-internal.sridevops.site, tool-setup.yml -e ansible_user=${{ secrets.SSH_USER }} -e ansible_password=${{ secrets.SSH_PWD }} -e tool_name=vault
