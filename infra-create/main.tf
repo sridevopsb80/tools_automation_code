@@ -51,9 +51,9 @@ resource "aws_security_group" "tool-sg" {
       cidr_blocks      = ["0.0.0.0/0"]
       description = ingress.key #(ingress.key = vault)
 
-  tags = {
-    Name = "${var.name}-sg"
   }
+    tags = {
+      Name = "${var.name}-sg"
     }
   }
 }
