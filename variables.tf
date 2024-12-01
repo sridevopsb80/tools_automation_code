@@ -16,15 +16,16 @@ variable "tools" {
       ports = {}
       # not defining any specific port to open for github-runner
     }
-  }
     vault = {
-    instance_type = "t3.small"
-    policy_name   = []
-    ports = {
-      vault = 8200
-      # defining port 8200 to be opened for vault
+      instance_type = "t3.small"
+      policy_name   = []
+      ports = {
+        vault = 8200
+        # defining port 8200 to be opened for vault
+      }
     }
   }
+
 }
 
 variable "hosted_zone_id" {
