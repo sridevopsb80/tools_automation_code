@@ -9,3 +9,4 @@ jobs:
       - run: echo $PATH
       - name: Run Vault Setup
         run: ansible-playbook -i vault-internal.sridevops.site, tool-setup.yml -e ansible_user=${{ secrets.SSH_USER }} -e ansible_password=${{ secrets.SSH_PWD }} -e tool_name=vault
+        #defining and using organization secrets from actions for better security
