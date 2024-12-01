@@ -17,7 +17,7 @@ variable "tools" {
       # not defining any specific port to open for github-runner
     }
   }
-  vault = {
+    vault = {
     instance_type = "t3.small"
     policy_name   = []
     ports = {
