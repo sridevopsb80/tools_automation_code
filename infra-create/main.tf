@@ -26,6 +26,7 @@ resource "aws_instance" "tool" {
 resource "aws_security_group" "tool-sg" {
   name        = "${var.name}-sg"
   description = "${var.name}-sg"
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -52,9 +53,10 @@ resource "aws_security_group" "tool-sg" {
       description = ingress.key #(ingress.key = vault)
 
   }
-    tags = {
-      Name = "${var.name}-sg"
-    }
+  }
+
+  tags = {
+    Name = "${var.name}-sg"
   }
 }
 
