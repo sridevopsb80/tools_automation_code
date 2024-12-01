@@ -32,16 +32,32 @@ resource "aws_security_group" "tool-sg" {
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
   }
+
   ingress {
     from_port        = 22
     to_port          = 22
     protocol         = "TCP"
     cidr_blocks      = ["0.0.0.0/0"]
   }
+
+  # Creating dynamic blocks - https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks
+
+  dynamic "ingress" {
+    for_each = var.ports
+    content {
+      from_port        = ingress.value #(vault port is defined as 8200)
+      to_port          = ingress.value #(vault port is defined as 8200)
+      protocol         = "TCP"
+      cidr_blocks      = ["0.0.0.0/0"]
+      description = ingress.key #(ingress.key = vault)
+
   tags = {
     Name = "${var.name}-sg"
   }
+    }
+  }
 }
+
 
 #creating public and private aws route53 records for external and internal use
 resource "aws_route53_record" "record-public" {

@@ -13,11 +13,17 @@ variable "tools" {
         # When provisioning another tool, the policy name can be changed based on the desired access.
 
       ]
+      ports = {}
+      # not defining any specific port to open for github-runner
     }
   }
   vault = {
     instance_type = "t3.small"
     policy_name   = []
+    ports = {
+      vault = 8200
+      # defining port 8200 to be opened for vault
+    }
   }
 }
 
