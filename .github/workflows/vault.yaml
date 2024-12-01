@@ -1,9 +1,11 @@
 #setup vault
-
+name: Run Vault Setup
+on: [workflow_dispatch]
 jobs:
   Provision:
     runs-on: self-hosted #setting up workflow to run on self-hosted server
     steps:
       - uses: actions/checkout@v4 #used to checkout the code
+        run: echo $PATH
       - name: Run Vault Setup
         run: ansible-playbook -i vault-internal.sridevops.site, tool-setup.yml -e ansible_user=${{ secrets.SSH_USER }} -e ansible_password=${{ secrets.SSH_PWD }} -e tool_name=vault
