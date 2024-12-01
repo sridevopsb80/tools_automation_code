@@ -1,4 +1,4 @@
-#setup vault with ansible
+#setup vault with ansible.
 
 - name: Download Vault repo file
   ansible.builtin.get_url:
