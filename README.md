@@ -16,3 +16,10 @@ ansible-playbook -i <Remote host IP where you want github-runner installed>, too
 ````
 ansible-playbook -i <Remote host IP where you want github-runner installed>, tool-setup.yml -e ansible_user=ec2-user -e ansible_password=DevOps321 -e tool_name=github-runner -vv
 ````
+
+## To unseal vault
+https://developer.hashicorp.com/vault/docs/commands/operator/unseal
+````
+vault operator unseal -tls-skip-verify <key value>
+````
+
