@@ -1,5 +1,8 @@
 #setup vault with ansible.
 
+- name: Set prompt
+  ansible.builtin.shell: set-prompt vault
+
 - name: Download Vault repo file
   ansible.builtin.get_url:
     url: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
