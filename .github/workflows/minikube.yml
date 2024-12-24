@@ -1,0 +1,9 @@
+name: Run Minikube Setup
+on: [workflow_dispatch]
+jobs:
+  Provision:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run minikube Setup
+        run: ansible-playbook -i minikube-internal.rdevopsb80.online, tool-setup.yml -e ansible_user=${{ secrets.SSH_USER }} -e ansible_password=${{ secrets.SSH_PASS }} -e tool_name=minikube
