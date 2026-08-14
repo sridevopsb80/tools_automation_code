@@ -1,9 +1,12 @@
 name: Run Minikube Setup
-on: [workflow_dispatch]
+on: [workflow_dispatch] # manual trigger
 jobs:
   Provision:
-    runs-on: self-hosted
+    runs-on: self-hosted # self-hosted runner
     steps:
       - uses: actions/checkout@v4
       - name: Run minikube Setup
-        run: ansible-playbook -i minikube-internal.sridevops.site, tool-setup.yml -e ansible_user=${{ secrets.SSH_USER }} -e ansible_password=${{ secrets.SSH_PWD }} -e tool_name=minikube
+        run: ansible-playbook -i minikube-internal.sridevops.site, \
+          tool-setup.yml -e ansible_user=${{ secrets.SSH_USER }} \
+          -e ansible_password=${{ secrets.SSH_PWD }} \
+          -e tool_name=minikube

@@ -1,5 +1,4 @@
-#copying relevant info from learn-terraform->10-remote-state->main.tf and editing values
-#tools is the var defined under variables.tf
+# configure s3 backend for remote state storage
 
 terraform {
   backend "s3" {
