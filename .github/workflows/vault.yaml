@@ -1,4 +1,4 @@
-#setup vault
+# setup vault
 name: Run Vault Setup
 on: [workflow_dispatch]
 jobs:

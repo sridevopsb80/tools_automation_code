@@ -1,13 +1,13 @@
 
-#we are running a job that will checkout the code and initiate terraform
+# running a job that will checkout the code and initiate terraform
 
 name: Provision Tool Infra
-on: [workflow_dispatch] #workflow will only run on manual trigger. disabled push runs
+on: [workflow_dispatch] # workflow will only run on manual trigger. disabled push runs
 jobs:
   Provision:
-    runs-on: self-hosted #setting up workflow to run on self-hosted server
+    runs-on: self-hosted # setting up workflow to run on self-hosted server
     steps:
-      - uses: actions/checkout@v4 #used to checkout the code
+      - uses: actions/checkout@v4 # used to get the code
       - name: Terraform Init
         run: terraform init
       - name: Terraform Apply

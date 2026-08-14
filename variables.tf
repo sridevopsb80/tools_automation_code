@@ -1,4 +1,5 @@
-#defining github-runner as the tool with t3.small as the instance type
+# var tools is used to define the tools that are to be provisioned
+
 #each.key value - github-runner
 #each.value["instance_type"]
 
@@ -8,9 +9,10 @@ variable "tools" {
       instance_type = "t3.small"
       policy_name = [
         "AdministratorAccess"
-        #Although we are referencing and provisioning (a pre-existing AWS policy) Administrator access to github-runner here, this is not good practice.
-        # we can add more policies under policy_name. when we do, it will become a list variable.
-        # When provisioning another tool, the policy name can be changed based on the desired access.
+        # Although we are referencing and provisioning (a pre-existing AWS policy) 
+        # Administrator access to github-runner here, this is not good practice.
+        # policy_name is a list. more values can be added later.
+        # When provisioning another tool, add the appropriate policy name based on the desired access.
 
       ]
       ports = {}
