@@ -2,14 +2,18 @@
 
 ## Documentation: 
 # https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/adding-self-hosted-runners
-# Go to https://github.com/organizations/sridevopsb80/settings/actions/runners 
+# Go to https://github.com/organizations/<org_name>/settings/actions/runners 
 # Check Create self-hosted runner for steps to add a self-hosted runner to github actions
+
+# Note: ./config.sh --url https://github.com/sridevopsb80 --token BJ6WX5NLJBIMW4AQGYSBJADKQCQCQ
+# token is unique. automating this might not work. run this step manually
+
 
 
 #######################################
-# In order to facilitate configuration on the server side, 
-# we need to setup authorization between ec2 and github using github cli. 
-# Run these steps manually if automation does not work,
+# In order to facilitate configuration on the build server, 
+# we need to setup authorization between ec2 (build server) and github using github cli. 
+# Run these steps manually if automation does not work.
 # Note: Do not perform the below steps as root user. 
 # The user used should be the same as the user we use for Grab token task section. 
 # Here the defined user is ec2-user
@@ -57,7 +61,6 @@
 - name: Setup Prompt
   ansible.builtin.shell: set-prompt github-runner
 
-# Adding a user
 - name: Add Github Runner User
   ansible.builtin.user:
     name: grunner
@@ -77,9 +80,9 @@
     owner: grunner
     group: grunner
 
-#Commenting this portion out as it is handled manually
+# Commenting this portion out as it is handled manually
 #- name: Download GitHub Cli Repo
-#  ansible.builtin.get_url: #will download files from a url
+#  ansible.builtin.get_url: # download files from a url
 #    url: https://cli.github.com/packages/rpm/gh-cli.repo
 #    dest: /etc/yum.repos.d/gh-cli.repo
 
@@ -88,13 +91,15 @@
 #    name: gh-cli
 #    state: latest
 
+# Call github api to get runner registration token, 
+# extract token from the reponse and store it as token
 - name: Grab Token
   ansible.builtin.shell: |
     gh api --method POST -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/sridevopsb80/actions/runners/registration-token | jq .token
-  register: token #using token since we have token defined in the shell command under configure github runner
+  register: token # using token since we have token defined in the shell command under configure github runner
   become_user: ec2-user # Token has to be fetched by ec2-user as gh login was done by that user.
 
-#Commenting out below section since it is only to be used for testing
+# Commenting out below section since it is only to be used for testing
 #- name: Print token
 #  ansible.builtin.debug:
 #    msg: "{{ token }}"
