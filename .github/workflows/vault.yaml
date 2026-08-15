@@ -3,7 +3,7 @@ name: Run Vault Setup
 on: [workflow_dispatch] # manual trigger
 jobs:
   Provision:
-    runs-on: self-hosted # self-hosted runner
+    runs-on: self-hosted # build server
     steps:
       - uses: actions/checkout@v4 # get the code
       - run: echo $PATH
