@@ -109,7 +109,8 @@
     name: libicu
     state: latest
 
-# To make sure that the installation runs only when the count is 0, we are getting the runner count and introducing conditional that count == 0 in later parts
+# To make sure that the installation runs only when the count is 0, 
+# we are getting the runner count and introducing conditional that count == 0 in later parts
 
 - name: Get the runner count
   ansible.builtin.shell: |
@@ -127,7 +128,9 @@
   #cd /actions-runner
   #./config.sh remove --name <runner name> --token <github auth token>
 
-# To make sure that the installation runs only when the status is online, we are getting the runner status and introducing conditional that status == offline in later parts. we are filtering the results for ec2 runner-name only.
+# To make sure that the installation runs only when the status is online, 
+# we are getting the runner status and introducing conditional that status == offline in configure github runner step.
+# filtering the results for ec2 runner-name only.
 - name: Get the runner status
   ansible.builtin.shell: |
     gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/sridevopsb80/actions/runners | jq '.runners[] | select(.name == "ec2") | .status' |xargs
@@ -152,7 +155,8 @@
   args:
     chdir: /actions-runner #this is the directory being used. Refer Create github directory
   become_user: grunner #command should not be run as root user
-  when: runner_count.stdout == "0" or runner_status.stdout == "offline" #conditional about runner count and runner status. we are using "" since output is strings
+  when: runner_count.stdout == "0" or runner_status.stdout == "offline" 
+  #conditional about runner count and runner status. using "" since output is strings
 
 #while running the above command manually, we notice that it requires libicu dependency, which needs to be installed in the previous step
 
@@ -176,7 +180,8 @@
   ansible.builtin.shell: ./svc.sh install grunner ;  ./svc.sh start
   args:
     chdir: /actions-runner
-  when: runner_count.stdout == "0" or runner_status.stdout == "offline" #conditional about runner count and runner status. we are using "" since output is strings
+  when: runner_count.stdout == "0" or runner_status.stdout == "offline" 
+  #conditional about runner count and runner status. using "" since output is strings
 
 # Setting up terraform for executing roboshop_terraform project
 - name: Download Terraform Repo file
