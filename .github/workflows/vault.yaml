@@ -1,4 +1,4 @@
-# setup vault
+# setup vault via build server using ansible
 name: Run Vault Setup
 on: [workflow_dispatch] # manual trigger
 jobs:
@@ -12,4 +12,4 @@ jobs:
           tool-setup.yml -e ansible_user=${{ secrets.SSH_USER }} \
           -e ansible_password=${{ secrets.SSH_PWD }} \
           -e tool_name=vault
-        #defining and using organization secrets from actions for better security
+        #defining and using github organization secrets from actions for better security

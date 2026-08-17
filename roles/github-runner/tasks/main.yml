@@ -118,6 +118,8 @@
   register: runner_count
   become_user: ec2-user
 
+  # xargs removes quotes from output
+
   #Steps to remove grunner in case it already exists:
   #ps -ef | grep grunner
   #sudo su
@@ -131,7 +133,7 @@
 # To make sure that the installation runs only when the status is online, 
 # we are getting the runner status and introducing conditional that status == offline in configure github runner step.
 # filtering the results for ec2 runner-name only.
-- name: Get the runner status
+- name: Get the runner status for ec2 runner
   ansible.builtin.shell: |
     gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /orgs/sridevopsb80/actions/runners | jq '.runners[] | select(.name == "ec2") | .status' |xargs
   register: runner_status
@@ -156,7 +158,9 @@
     chdir: /actions-runner #this is the directory being used. Refer Create github directory
   become_user: grunner #command should not be run as root user
   when: runner_count.stdout == "0" or runner_status.stdout == "offline" 
-  #conditional about runner count and runner status. using "" since output is strings
+  # conditional about runner count and runner status. 
+  # will run when there is no runner or if runner is offline
+  # using "" since output is strings
 
 #while running the above command manually, we notice that it requires libicu dependency, which needs to be installed in the previous step
 
@@ -168,7 +172,8 @@
 #./svc.sh start
 #./svc.sh will show available options, including install, uninstall, start and stop
 
-# Set path to receive input from roles/files/path, which is the same as $PATH derived from the github-runner machine
+# modify gh runner path to receive input from roles/files/path during ansible execution, 
+# which is the same as $PATH derived from the github-runner machine
 - name: Update Path file
   ansible.builtin.copy:
     src: path

@@ -1,6 +1,6 @@
 # var tools is used to define the tools that are to be provisioned
-#each.key value - github-runner
-#each.value["instance_type"]
+# ex: each.key value - github-runner
+# ex: each.value["instance_type"]
 
 
 variable "tools" {
