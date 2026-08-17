@@ -42,7 +42,8 @@ resource "aws_security_group" "tool-sg" {
     cidr_blocks      = ["0.0.0.0/0"]
   }
 
-  # Creating dynamic blocks - https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks
+  # Creating dynamic block
+  # https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks
 
   dynamic "ingress" {
     for_each = var.ports
