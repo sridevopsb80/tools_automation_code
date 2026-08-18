@@ -1,4 +1,4 @@
-#setup vault with ansible.
+# install vault with ansible.
 
 - name: Set prompt
   ansible.builtin.shell: set-prompt vault
@@ -18,3 +18,5 @@
     name: vault
     state: restarted
     enabled: yes
+
+# vault secrets need to be created manually
